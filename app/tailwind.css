@@ -1,0 +1,237 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Premium Style System for Sandeep Kairamkonda Portfolio
+  $10K-tier design with teal accent and modern typography
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@theme inline {
+  /* Primary - Premium Teal/Cyan Accent */
+  --color-primary-100: #d0f4f4;
+  --color-primary-200: #a1e9e9;
+  --color-primary-300: #72dede;
+  --color-primary-400: #43d3d3;
+  --color-primary-500: #14c8c8;
+  --color-primary-600: #10a3a3;
+  --color-primary-700: #0c7e7e;
+  --color-primary-800: #085959;
+  --color-primary-900: #043434;
+
+  /* Secondary - Gold/Amber for highlights */
+  --color-secondary-400: #fbbf24;
+  --color-secondary-500: #f59e0b;
+
+  /* Animation keyframes */
+  --animate-first: moveVertical 30s ease infinite;
+  --animate-second: moveInCircle 20s reverse infinite;
+  --animate-third: moveInCircle 40s linear infinite;
+  --animate-fourth: moveHorizontal 40s ease infinite;
+  --animate-fifth: moveInCircle 20s ease infinite;
+
+  @keyframes moveHorizontal {
+    0% {
+      transform: translateX(-50%) translateY(-10%);
+    }
+    50% {
+      transform: translateX(50%) translateY(10%);
+    }
+    100% {
+      transform: translateX(-50%) translateY(-10%);
+    }
+  }
+
+  @keyframes moveInCircle {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes moveVertical {
+    0% {
+      transform: translateY(-50%);
+    }
+    50% {
+      transform: translateY(50%);
+    }
+    100% {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(20, 200, 200, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 20px 10px rgba(20, 200, 200, 0.1);
+    }
+  }
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+.underline-magical {
+  @apply bg-linear-to-r from-primary-500 to-primary-500 bg-no-repeat 
+  no-underline [background-position:0_100%]
+  [background-size:100%_0.2em] focus:[background-size:100%_100%] hover:text-white
+  hover:[background-size:100%_100%] motion-safe:transition-all
+  motion-safe:duration-300 dark:from-primary-500 dark:to-primary-500;
+}
+
+.horizontal-underline {
+  border-bottom-width: 0;
+  background-image:
+    linear-gradient(transparent, transparent), linear-gradient(#14c8c8, #14c8c8);
+  background-size: 0 3px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out;
+}
+
+.horizontal-underline:hover {
+  background-size: 100% 3px;
+  background-position: 0 100%;
+}
+
+.horizontal-underline-active {
+  background-size: 100% 3px;
+  background-position: 0 100%;
+}
+
+#nprogress .bar {
+  background: #14c8c8;
+  height: 4px;
+}
+
+.intro-text {
+  transition: opacity 0.4s;
+}
+
+/* Skill badge hover effect */
+.skill-badge {
+  @apply px-3 py-1.5 rounded-full text-sm font-medium 
+    bg-neutral-100 dark:bg-neutral-800 
+    text-neutral-700 dark:text-neutral-300
+    transition-all duration-200 ease-out
+    hover:bg-primary-500 hover:text-white
+    hover:scale-105 hover:shadow-lg;
+}
+
+/* Experience timeline styles */
+.timeline-line {
+  @apply absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary-500 via-primary-400 to-transparent;
+}
+
+.timeline-dot {
+  @apply w-3 h-3 bg-primary-500 rounded-full absolute -left-1.5 top-2
+    ring-4 ring-white dark:ring-neutral-900;
+}
+
+/* Metric highlight cards */
+.metric-card {
+  @apply relative overflow-hidden rounded-2xl p-6
+    bg-gradient-to-br from-neutral-50 to-neutral-100
+    dark:from-neutral-900 dark:to-neutral-800
+    border border-neutral-200 dark:border-neutral-700
+    transition-transform duration-300 hover:scale-[1.02];
+}
+
+.metric-value {
+  @apply text-4xl md:text-5xl font-bold text-primary-500;
+}
+
+.metric-label {
+  @apply text-sm text-neutral-600 dark:text-neutral-400 mt-1;
+}
+
+/* ViewTransition API Animations for Theme Toggle */
+html {
+  view-transition-name: theme;
+}
+
+::view-transition-old(theme),
+::view-transition-new(theme) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Circle animation from top-right */
+::view-transition-new(theme) {
+  clip-path: circle(0% at top right);
+  animation: circle-top-right 0.5s ease-out;
+  animation-fill-mode: both;
+  transform-origin: top right;
+}
+
+::view-transition-old(theme) {
+  z-index: -1;
+}
+
+@keyframes circle-top-right {
+  from {
+    clip-path: circle(0% at top right);
+  }
+  to {
+    clip-path: circle(150% at top right);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Section spacing */
+.section-padding {
+  @apply py-20 md:py-28 lg:py-32;
+}
+
+.container-narrow {
+  @apply max-w-4xl mx-auto px-6 md:px-8 lg:px-12;
+}
+
+.container-wide {
+  @apply max-w-6xl mx-auto px-6 md:px-8 lg:px-12;
+}
